@@ -1,8 +1,15 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useThemeColor } from '../../hooks/useThemeColor';
 
 export default function ContactDetailScreen({ route, navigation }: any) {
   const { contact } = route.params;
+
+  const background = useThemeColor({}, 'background');
+  const text = useThemeColor({}, 'text');
+  const editBg = useThemeColor({ light: '#007bff', dark: '#339cff' }, 'tint');
+  const deleteBg = useThemeColor({ light: '#dc3545', dark: '#ff4d4f' }, 'tabIconSelected');
+  const buttonText = useThemeColor({ light: '#fff', dark: '#fff' }, 'background');
 
   const handleDelete = () => {
     Alert.alert(
@@ -28,17 +35,17 @@ export default function ContactDetailScreen({ route, navigation }: any) {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{contact.name}</Text>
-      <Text style={styles.detail}>🎂 Cumpleaños: {contact.date}</Text>
-      <Text style={styles.detail}>👥 Relación: {contact.relation}</Text>
+    <View style={[styles.container, { backgroundColor: background }]}> 
+      <Text style={[styles.title, { color: text }]}>{contact.name}</Text>
+      <Text style={[styles.detail, { color: text }]}>🎂 Cumpleaños: {contact.date}</Text>
+      <Text style={[styles.detail, { color: text }]}>👥 Relación: {contact.relation}</Text>
 
-      <TouchableOpacity style={styles.editButton} onPress={handleEdit}>
-        <Text style={styles.buttonText}>Editar</Text>
+      <TouchableOpacity style={[styles.editButton, { backgroundColor: editBg }]} onPress={handleEdit}>
+        <Text style={[styles.buttonText, { color: buttonText }]}>Editar</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.deleteButton} onPress={handleDelete}>
-        <Text style={styles.buttonText}>Eliminar</Text>
+      <TouchableOpacity style={[styles.deleteButton, { backgroundColor: deleteBg }]} onPress={handleDelete}>
+        <Text style={[styles.buttonText, { color: buttonText }]}>Eliminar</Text>
       </TouchableOpacity>
     </View>
   );
@@ -49,18 +56,16 @@ const styles = StyleSheet.create({
   title: { fontSize: 26, fontWeight: 'bold', marginBottom: 10 },
   detail: { fontSize: 18, marginVertical: 8 },
   editButton: {
-    backgroundColor: '#007bff',
     padding: 14,
     borderRadius: 8,
     alignItems: 'center',
     marginTop: 30,
   },
   deleteButton: {
-    backgroundColor: '#dc3545',
     padding: 14,
     borderRadius: 8,
     alignItems: 'center',
     marginTop: 15,
   },
-  buttonText: { color: '#fff', fontWeight: 'bold' },
+  buttonText: { fontWeight: 'bold' },
 });
