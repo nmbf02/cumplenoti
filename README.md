@@ -1,50 +1,120 @@
-# Welcome to your Expo app 👋
+# 🎉 CumpleNoti
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+**Nunca olvides un momento especial.**
 
-## Get started
+CumpleNoti es una aplicación móvil social que revoluciona la forma en que recordamos y celebramos los cumpleaños. Más que simples notificaciones, la app crea automáticamente grupos secretos para planificar sorpresas, organizar regalos colaborativos y fortalecer los lazos con nuestros seres queridos.
 
-1. Install dependencies
+---
+
+## 📱 About the App
+
+> CumpleNoti transforma recordatorios de cumpleaños en experiencias colaborativas. Recibe alertas con antelación, crea grupos secretos con tus contactos y organiza regalos o tareas para hacer del cumpleaños de alguien un evento inolvidable.
+
+---
+
+## 🛠 Tecnologías utilizadas
+
+### Frontend
+- React Native + Expo
+- React Navigation
+- Redux Toolkit
+- AsyncStorage
+- i18n-js (traducciones)
+- Moment.js
+
+### Backend (próximamente)
+- Node.js + Express
+- MongoDB Atlas + Mongoose
+- JWT + bcrypt
+- Firebase Cloud Messaging
+- Socket.io (actualizaciones en tiempo real)
+
+---
+
+## 📦 Estructura del proyecto
+
+```
+
+cumplenoti/
+├── src/
+│   ├── screens/            # Pantallas de la app
+│   ├── navigation/         # Stack de navegación
+│   ├── i18n/               # Soporte multilenguaje
+│   └── components/         # Componentes reutilizables
+├── App.tsx                 # Punto de entrada
+├── package.json
+└── README.md
+
+````
+
+---
+
+## 🚀 Cómo iniciar
+
+1. Instala las dependencias:
 
    ```bash
    npm install
-   ```
+   
+``
 
-2. Start the app
+2. Inicia el proyecto:
 
    ```bash
    npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+3. Abre la app en:
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+* [Expo Go (iOS o Android)](https://expo.dev/go)
+* [Emulador Android](https://docs.expo.dev/workflow/android-studio-emulator/)
+* [Simulador iOS](https://docs.expo.dev/workflow/ios-simulator/)
+* O en el navegador con:
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+  ```bash
+  npx expo start --web
+  ```
 
-## Get a fresh project
+---
 
-When you're ready, run:
+## 🧪 Estado del desarrollo
 
-```bash
-npm run reset-project
-```
+| Funcionalidad                     | Estado |
+| --------------------------------- | ------ |
+| Pantallas base (Login, Registro…) | ✅      |
+| Navegación y formularios          | ✅      |
+| Soporte multilenguaje             | ✅      |
+| Backend y autenticación           | 🔜     |
+| Temas           | 🔜     |
+| Notificaciones push               | 🔜     |
+| Listas colaborativas              | 🔜     |
+| Grupos secretos automáticos       | 🔜     |
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+---
 
-## Learn more
+## 📸 Capturas (pendiente)
 
-To learn more about developing your project with Expo, look at the following resources:
+> Se agregarán capturas cuando esté conectada al backend.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+---
 
-## Join the community
+## 📚 Aprende más sobre Expo
 
-Join our community of developers creating universal apps.
+* [Expo documentation](https://docs.expo.dev/)
+* [Expo tutorial](https://docs.expo.dev/tutorial/introduction/)
+* [File-based routing (si usas Tabs)](https://docs.expo.dev/router/introduction/)
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+---
+
+## 🤝 Comunidad
+
+* [Expo GitHub](https://github.com/expo/expo)
+* [Expo Discord](https://chat.expo.dev)
+
+---
+
+## 📌 Licencia
+
+Este proyecto es de uso académico y experimental. Todos los derechos reservados a Nathaly Michel Berroa Fermín.
+
+---
