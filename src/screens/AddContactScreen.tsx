@@ -1,16 +1,12 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import DatePicker from 'react-native-datepicker';
 import * as yup from 'yup';
 import { useThemeColor } from '../../hooks/useThemeColor';
-
-const schema = yup.object().shape({
-  name: yup.string().required('El nombre es obligatorio'),
-  date: yup.string().required('La fecha de cumpleaños es obligatoria'),
-  relation: yup.string().required('Indica la relación con esta persona'),
-});
+import '../i18n';
 
 export default function AddContactScreen({ navigation }: any) {
   const background = useThemeColor({}, 'background');
@@ -18,6 +14,13 @@ export default function AddContactScreen({ navigation }: any) {
   const inputBorder = useThemeColor({ light: '#ccc', dark: '#444' }, 'icon');
   const buttonBg = useThemeColor({ light: '#1e90ff', dark: '#0a7ea4' }, 'tint');
   const buttonText = useThemeColor({ light: '#fff', dark: '#fff' }, 'background');
+  const { t } = useTranslation();
+
+  const schema = yup.object().shape({
+    name: yup.string().required(t('addContact.error_name')),
+    date: yup.string().required(t('addContact.error_date')),
+    relation: yup.string().required(t('addContact.error_relation')),
+  });
 
   const {
     control,
@@ -29,22 +32,22 @@ export default function AddContactScreen({ navigation }: any) {
 
   const onSubmit = (data: any) => {
     console.log('Nuevo contacto:', data);
-    Alert.alert('Contacto guardado', `${data.name} fue agregado con éxito`);
+    Alert.alert(t('addContact.saved_title'), t('addContact.saved_message', { name: data.name }));
     navigation.goBack(); // vuelve a la pantalla anterior
   };
 
   return (
     <View style={[styles.container, { backgroundColor: background }]}> 
-      <Text style={[styles.title, { color: text }]}>Agregar Contacto</Text>
+      <Text style={[styles.title, { color: text }]}>{t('addContact.title')}</Text>
 
-      <Text style={{ color: text }}>Nombre</Text>
+      <Text style={{ color: text }}>{t('addContact.name')}</Text>
       <Controller
         control={control}
         name="name"
         render={({ field: { onChange, value } }) => (
           <TextInput
             style={[styles.input, { borderColor: inputBorder, color: text }]}
-            placeholder="Nombre del contacto"
+            placeholder={t('addContact.name_placeholder')}
             placeholderTextColor={inputBorder}
             value={value}
             onChangeText={onChange}
@@ -53,7 +56,7 @@ export default function AddContactScreen({ navigation }: any) {
       />
       {errors.name && <Text style={styles.error}>{errors.name.message}</Text>}
 
-      <Text style={{ color: text }}>Fecha de cumpleaños</Text>
+      <Text style={{ color: text }}>{t('addContact.date')}</Text>
       <Controller
         control={control}
         name="date"
@@ -62,10 +65,10 @@ export default function AddContactScreen({ navigation }: any) {
             style={{ width: '100%', marginBottom: 10 }}
             date={value}
             mode="date"
-            placeholder="Selecciona la fecha"
+            placeholder={t('addContact.date_placeholder')}
             format="YYYY-MM-DD"
-            confirmBtnText="Confirmar"
-            cancelBtnText="Cancelar"
+            confirmBtnText={t('addContact.confirm')}
+            cancelBtnText={t('addContact.cancel')}
             customStyles={{
               dateInput: [styles.dateInput, { borderColor: inputBorder }],
             }}
@@ -77,14 +80,14 @@ export default function AddContactScreen({ navigation }: any) {
       />
       {errors.date && <Text style={styles.error}>{errors.date.message}</Text>}
 
-      <Text style={{ color: text }}>Relación</Text>
+      <Text style={{ color: text }}>{t('addContact.relation')}</Text>
       <Controller
         control={control}
         name="relation"
         render={({ field: { onChange, value } }) => (
           <TextInput
             style={[styles.input, { borderColor: inputBorder, color: text }]}
-            placeholder="Amigo, familia, etc."
+            placeholder={t('addContact.relation_placeholder')}
             placeholderTextColor={inputBorder}
             value={value}
             onChangeText={onChange}
@@ -94,7 +97,7 @@ export default function AddContactScreen({ navigation }: any) {
       {errors.relation && <Text style={styles.error}>{errors.relation.message}</Text>}
 
       <TouchableOpacity style={[styles.saveButton, { backgroundColor: buttonBg }]} onPress={handleSubmit(onSubmit)}>
-        <Text style={[styles.saveButtonText, { color: buttonText }]}>Guardar Contacto</Text>
+        <Text style={[styles.saveButtonText, { color: buttonText }]}>{t('addContact.save')}</Text>
       </TouchableOpacity>
     </View>
   );

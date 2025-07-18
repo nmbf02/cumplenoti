@@ -1,6 +1,8 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useThemeColor } from '../../hooks/useThemeColor';
+import '../i18n';
 
 const mockContacts = [
   { id: '1', name: 'María López', date: '1995-05-10', relation: 'Amiga' },
@@ -15,6 +17,7 @@ export default function ContactListScreen({ navigation }: any) {
   const nameColor = useThemeColor({}, 'text');
   const relationColor = useThemeColor({ light: '#555', dark: '#aaa' }, 'icon');
   const dateColor = useThemeColor({ light: '#888', dark: '#bbb' }, 'tabIconDefault');
+  const { t } = useTranslation();
 
   const renderItem = ({ item }: any) => (
     <TouchableOpacity
@@ -22,14 +25,14 @@ export default function ContactListScreen({ navigation }: any) {
       onPress={() => navigation.navigate('ContactDetail', { contact: item })}
     >
       <Text style={[styles.name, { color: nameColor }]}>{item.name}</Text>
-      <Text style={[styles.relation, { color: relationColor }]}>{item.relation}</Text>
+      <Text style={[styles.relation, { color: relationColor }]}>{t('contactList.relation.' + item.relation)}</Text>
       <Text style={[styles.date, { color: dateColor }]}>🎂 {item.date}</Text>
     </TouchableOpacity>
   );
 
   return (
     <View style={[styles.container, { backgroundColor: background }]}> 
-      <Text style={[styles.title, { color: text }]}>Tus Contactos</Text>
+      <Text style={[styles.title, { color: text }]}>{t('contactList.title')}</Text>
       <FlatList
         data={mockContacts}
         keyExtractor={(item) => item.id}

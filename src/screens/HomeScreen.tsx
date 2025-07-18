@@ -1,6 +1,8 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useThemeColor } from '../../hooks/useThemeColor';
+import '../i18n';
 
 export default function HomeScreen({ navigation }: any) {
   const background = useThemeColor({}, 'background');
@@ -13,6 +15,7 @@ export default function HomeScreen({ navigation }: any) {
   const buttonText = useThemeColor({ light: '#fff', dark: '#fff' }, 'background');
 
   const upcomingBirthdays: any[] = []; // aquí luego conectaremos la data real
+  const { t } = useTranslation();
 
   const renderBirthday = ({ item }: any) => (
     <View style={[styles.card, { backgroundColor: cardBg }]}> 
@@ -23,11 +26,11 @@ export default function HomeScreen({ navigation }: any) {
 
   return (
     <View style={[styles.container, { backgroundColor: background }]}> 
-      <Text style={[styles.title, { color: text }]}>Hola, Nathaly 👋</Text>
-      <Text style={[styles.subtitle, { color: text }]}>Estos son los próximos cumpleaños:</Text>
+      <Text style={[styles.title, { color: text }]}>{t('home.greeting', { name: 'Nathaly' })}</Text>
+      <Text style={[styles.subtitle, { color: text }]}>{t('home.subtitle')}</Text>
 
       {upcomingBirthdays.length === 0 ? (
-        <Text style={[styles.empty, { color: emptyColor }]}>Aún no hay cumpleaños próximos</Text>
+        <Text style={[styles.empty, { color: emptyColor }]}>{t('home.empty')}</Text>
       ) : (
         <FlatList
           data={upcomingBirthdays}
@@ -40,7 +43,7 @@ export default function HomeScreen({ navigation }: any) {
         style={[styles.addButton, { backgroundColor: buttonBg }]}
         onPress={() => navigation.navigate('AddContact')}
       >
-        <Text style={[styles.addButtonText, { color: buttonText }]}>+ Agregar Contacto</Text>
+        <Text style={[styles.addButtonText, { color: buttonText }]}>{t('home.add')}</Text>
       </TouchableOpacity>
     </View>
   );

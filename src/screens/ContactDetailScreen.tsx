@@ -1,6 +1,8 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useThemeColor } from '../../hooks/useThemeColor';
+import '../i18n';
 
 export default function ContactDetailScreen({ route, navigation }: any) {
   const { contact } = route.params;
@@ -11,17 +13,19 @@ export default function ContactDetailScreen({ route, navigation }: any) {
   const deleteBg = useThemeColor({ light: '#dc3545', dark: '#ff4d4f' }, 'tabIconSelected');
   const buttonText = useThemeColor({ light: '#fff', dark: '#fff' }, 'background');
 
+  const { t } = useTranslation();
+
   const handleDelete = () => {
     Alert.alert(
-      'Eliminar contacto',
-      `¿Seguro que deseas eliminar a ${contact.name}?`,
+      t('contactDetail.delete_title'),
+      t('contactDetail.delete_confirm', { name: contact.name }),
       [
-        { text: 'Cancelar', style: 'cancel' },
+        { text: t('settings.logout_cancel'), style: 'cancel' },
         {
-          text: 'Eliminar',
+          text: t('contactDetail.delete'),
           style: 'destructive',
           onPress: () => {
-            Alert.alert('Eliminado', `${contact.name} ha sido eliminado`);
+            Alert.alert(t('contactDetail.delete_success', { name: contact.name }));
             navigation.goBack();
           },
         },
@@ -30,22 +34,21 @@ export default function ContactDetailScreen({ route, navigation }: any) {
   };
 
   const handleEdit = () => {
-    // Aquí podríamos navegar a una pantalla de edición (opcional más adelante)
-    Alert.alert('Editar contacto', 'Función aún no implementada');
+    Alert.alert(t('contactDetail.edit_title'), t('contactDetail.edit_not_implemented'));
   };
 
   return (
     <View style={[styles.container, { backgroundColor: background }]}> 
       <Text style={[styles.title, { color: text }]}>{contact.name}</Text>
-      <Text style={[styles.detail, { color: text }]}>🎂 Cumpleaños: {contact.date}</Text>
-      <Text style={[styles.detail, { color: text }]}>👥 Relación: {contact.relation}</Text>
+      <Text style={[styles.detail, { color: text }]}>🎂 {t('contactDetail.birthday')}: {contact.date}</Text>
+      <Text style={[styles.detail, { color: text }]}>👥 {t('contactDetail.relation')}: {contact.relation}</Text>
 
       <TouchableOpacity style={[styles.editButton, { backgroundColor: editBg }]} onPress={handleEdit}>
-        <Text style={[styles.buttonText, { color: buttonText }]}>Editar</Text>
+        <Text style={[styles.buttonText, { color: buttonText }]}>{t('contactDetail.edit')}</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={[styles.deleteButton, { backgroundColor: deleteBg }]} onPress={handleDelete}>
-        <Text style={[styles.buttonText, { color: buttonText }]}>Eliminar</Text>
+        <Text style={[styles.buttonText, { color: buttonText }]}>{t('contactDetail.delete')}</Text>
       </TouchableOpacity>
     </View>
   );
