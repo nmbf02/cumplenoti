@@ -1,7 +1,9 @@
 import moment from 'moment';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { StyleSheet, Text, View } from 'react-native';
 import { useThemeColor } from '../../hooks/useThemeColor';
+import '../i18n';
 
 // Mock de contactos con fechas de cumpleaños
 const contacts = [
@@ -21,31 +23,33 @@ export default function ReminderScreen() {
   const emptyColor = useThemeColor({ light: '#999', dark: '#888' }, 'icon');
 
   const today = moment();
-  
+  const { t, i18n } = useTranslation();
+  // Obtener idioma del contexto para formato de fecha
+
   const categorized = contacts.reduce(
     (acc: any, contact) => {
       const birthdayThisYear = moment(contact.birthday).year(today.year());
       const daysUntil = birthdayThisYear.diff(today, 'days');
 
-      if (daysUntil === 1) acc['1 día'].push(contact);
-      else if (daysUntil <= 3) acc['3 días'].push(contact);
-      else if (daysUntil <= 7) acc['7 días'].push(contact);
+      if (daysUntil === 1) acc[t('reminder.group_1')].push(contact);
+      else if (daysUntil <= 3) acc[t('reminder.group_3')].push(contact);
+      else if (daysUntil <= 7) acc[t('reminder.group_7')].push(contact);
 
       return acc;
     },
-    { '1 día': [], '3 días': [], '7 días': [] }
+    { [t('reminder.group_1')]: [], [t('reminder.group_3')]: [], [t('reminder.group_7')]: [] }
   );
 
   const renderGroup = (label: string, data: any[]) => (
     <>
-      <Text style={[styles.groupTitle, { color: groupTitle }]}>🎉 En {label}</Text>
+      <Text style={[styles.groupTitle, { color: groupTitle }]}>🎉 {t('reminder.group_' + label)}</Text>
       {data.length === 0 ? (
-        <Text style={[styles.empty, { color: emptyColor }]}>Sin cumpleaños en este rango</Text>
+        <Text style={[styles.empty, { color: emptyColor }]}>{t('reminder.empty')}</Text>
       ) : (
         data.map((c) => (
           <View key={c.id} style={[styles.card, { backgroundColor: cardBg }]}> 
             <Text style={[styles.name, { color: nameColor }]}>{c.name}</Text>
-            <Text style={[styles.date, { color: dateColor }]}>{moment(c.birthday).format('DD MMM YYYY')}</Text>
+            <Text style={[styles.date, { color: dateColor }]}>{moment(c.birthday).format(t('reminder.date_format'))}</Text>
           </View>
         ))
       )}
@@ -54,10 +58,10 @@ export default function ReminderScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: background, flex: 1 }]}> 
-      <Text style={[styles.title, { color: text }]}>Próximos Cumpleaños</Text>
-      {renderGroup('1 día', categorized['1 día'])}
-      {renderGroup('3 días', categorized['3 días'])}
-      {renderGroup('7 días', categorized['7 días'])}
+      <Text style={[styles.title, { color: text }]}>{t('reminder.title')}</Text>
+      {renderGroup('1', categorized[t('reminder.group_1')])}
+      {renderGroup('3', categorized[t('reminder.group_3')])}
+      {renderGroup('7', categorized[t('reminder.group_7')])}
     </View>
   );
 }
