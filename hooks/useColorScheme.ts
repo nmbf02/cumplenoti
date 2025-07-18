@@ -1,4 +1,4 @@
-import { useThemeContext } from '../context/ThemeContext';
+import { useThemeContext } from '../src/context/ThemeContext';
 
 export function useColorScheme() {
   try {
