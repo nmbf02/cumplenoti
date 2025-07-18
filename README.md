@@ -83,9 +83,9 @@ cumplenoti/
 | --------------------------------- | ------ |
 | Pantallas base (Login, Registro…) | ✅      |
 | Navegación y formularios          | ✅      |
-| Soporte multilenguaje             | ✅      |
+| Soporte multilenguaje             | 🔜      |
 | Backend y autenticación           | 🔜     |
-| Temas           | 🔜     |
+| Temas           | ✅     |
 | Notificaciones push               | 🔜     |
 | Listas colaborativas              | 🔜     |
 | Grupos secretos automáticos       | 🔜     |
@@ -111,10 +111,3 @@ cumplenoti/
 * [Expo GitHub](https://github.com/expo/expo)
 * [Expo Discord](https://chat.expo.dev)
 
----
-
-## 📌 Licencia
-
-Este proyecto es de uso académico y experimental. Todos los derechos reservados a Nathaly Michel Berroa Fermín.
-
----
