@@ -26,55 +26,85 @@ export default function LoginScreen({ navigation }: any) {
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: background }]}> 
-      <Text style={[styles.title, { color: text }]}>Iniciar Sesión</Text>
+    <View style={[styles.outer, { backgroundColor: background }]}> 
+      <View style={styles.centeredBox}>
+        <Text style={[styles.title, { color: text }]}>Iniciar Sesión</Text>
 
-      <Text style={{ color: text }}>Email</Text>
-      <Controller
-        control={control}
-        name="email"
-        render={({ field: { onChange, value } }) => (
-          <TextInput
-            style={[styles.input, { borderColor: inputBorder, color: text }]}
-            placeholder="Correo"
-            placeholderTextColor={inputBorder}
-            value={value}
-            onChangeText={onChange}
-            keyboardType="email-address"
-          />
-        )}
-      />
-      {errors.email && <Text style={styles.error}>{errors.email.message}</Text>}
+        <Text style={{ color: text }}>Email</Text>
+        <Controller
+          control={control}
+          name="email"
+          render={({ field: { onChange, value } }) => (
+            <TextInput
+              style={[styles.input, { borderColor: inputBorder, color: text }]}
+              placeholder="Correo"
+              placeholderTextColor={inputBorder}
+              value={value}
+              onChangeText={onChange}
+              keyboardType="email-address"
+              autoCapitalize="none"
+              autoCorrect={false}
+            />
+          )}
+        />
+        {errors.email && <Text style={styles.error}>{errors.email.message}</Text>}
 
-      <Text style={{ color: text }}>Contraseña</Text>
-      <Controller
-        control={control}
-        name="password"
-        render={({ field: { onChange, value } }) => (
-          <TextInput
-            style={[styles.input, { borderColor: inputBorder, color: text }]}
-            placeholder="Contraseña"
-            placeholderTextColor={inputBorder}
-            secureTextEntry
-            value={value}
-            onChangeText={onChange}
-          />
-        )}
-      />
-      {errors.password && <Text style={styles.error}>{errors.password.message}</Text>}
+        <Text style={{ color: text }}>Contraseña</Text>
+        <Controller
+          control={control}
+          name="password"
+          render={({ field: { onChange, value } }) => (
+            <TextInput
+              style={[styles.input, { borderColor: inputBorder, color: text }]}
+              placeholder="Contraseña"
+              placeholderTextColor={inputBorder}
+              secureTextEntry
+              value={value}
+              onChangeText={onChange}
+              autoCapitalize="none"
+              autoCorrect={false}
+            />
+          )}
+        />
+        {errors.password && <Text style={styles.error}>{errors.password.message}</Text>}
 
-      <Button title="Iniciar sesión" onPress={handleSubmit(onSubmit)} />
-      <Text style={[styles.link, { color: linkColor }]} onPress={() => navigation.navigate('Register')}>
-        ¿No tienes cuenta? Regístrate
-      </Text>
+        <View style={styles.buttonWrapper}>
+          <Button title="Iniciar sesión" onPress={handleSubmit(onSubmit)} color="#189CFC" />
+        </View>
+        <Text style={[styles.link, { color: linkColor }]} onPress={() => navigation.navigate('Register')}>
+          ¿No tienes cuenta? Regístrate
+        </Text>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { padding: 20, marginTop: 80 },
+  outer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f7f7f7',
+  },
+  centeredBox: {
+    width: '100%',
+    maxWidth: 600,
+    backgroundColor: '#111',
+    borderRadius: 10,
+    padding: 32,
+    // boxShadow eliminado por incompatibilidad
+    elevation: 4, // Sombra compatible RN
+  },
   title: { fontSize: 24, fontWeight: 'bold', marginBottom: 20 },
-  input: { borderWidth: 1, padding: 10, marginBottom: 10, borderRadius: 5 },
-  error: { color: 'red', marginBottom: 10 },
-  link: { marginTop: 15 },
+  input: {
+    borderWidth: 1,
+    padding: 12,
+    marginBottom: 10,
+    borderRadius: 5,
+    fontSize: 16,
+    backgroundColor: '#181818',
+  },
+  error: { color: 'red', marginBottom: 10, fontSize: 14 },
+  buttonWrapper: { marginTop: 10, marginBottom: 10 },
+  link: { marginTop: 15, fontSize: 14 }, // cursor y textAlign eliminados
 });
