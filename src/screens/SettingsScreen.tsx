@@ -1,10 +1,22 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useThemeColor } from '../../hooks/useThemeColor';
+import '../i18n';
 import { useThemeContext } from '../context/ThemeContext';
 
 export default function SettingsScreen({ navigation }: any) {
-  const { theme, setTheme } = useThemeContext();
+  const { theme, setTheme, language, setLanguage } = useThemeContext();
+  const { t, i18n } = useTranslation();
+
+  React.useEffect(() => {
+    if (language === 'system') {
+      const sysLang = (navigator.language || 'es').startsWith('en') ? 'en' : 'es';
+      i18n.changeLanguage(sysLang);
+    } else {
+      i18n.changeLanguage(language);
+    }
+  }, [language, i18n]);
 
   const background = useThemeColor({}, 'background');
   const text = useThemeColor({}, 'text');
@@ -18,33 +30,36 @@ export default function SettingsScreen({ navigation }: any) {
   const themeButtonActiveBorder = useThemeColor({ light: '#1e90ff', dark: '#339cff' }, 'tint');
 
   const handleLogout = () => {
-    Alert.alert('Cerrar sesión', '¿Estás segura/o que deseas salir?', [
-      { text: 'Cancelar', style: 'cancel' },
-      {
-        text: 'Salir',
-        style: 'destructive',
-        onPress: () => {
-          // Aquí luego borraremos el token del usuario (AsyncStorage)
-          navigation.reset({
-            index: 0,
-            routes: [{ name: 'Login' }],
-          });
+    Alert.alert(
+      t('settings.logout'),
+      t('settings.logout_confirm'),
+      [
+        { text: t('settings.logout_cancel'), style: 'cancel' },
+        {
+          text: t('settings.logout_exit'),
+          style: 'destructive',
+          onPress: () => {
+            navigation.reset({
+              index: 0,
+              routes: [{ name: 'Login' }],
+            });
+          },
         },
-      },
-    ]);
+      ]
+    );
   };
 
   return (
     <View style={[styles.container, { backgroundColor: background }]}> 
-      <Text style={[styles.title, { color: text }]}>Configuración</Text>
+      <Text style={[styles.title, { color: text }]}>{t('settings.title')}</Text>
 
       {/* Aquí luego se mostrará el nombre del usuario */}
       <View style={[styles.profileBox, { backgroundColor: profileBg }]}> 
-        <Text style={[styles.label, { color: labelColor }]}>Usuario:</Text>
+        <Text style={[styles.label, { color: labelColor }]}>{t('settings.user')}</Text>
         <Text style={[styles.value, { color: text }]}>Nathaly Michel</Text>
       </View>
 
-      <Text style={[styles.label, { color: labelColor }]}>Tema</Text>
+      <Text style={[styles.label, { color: labelColor }]}>{t('settings.theme')}</Text>
       <View style={styles.themeRow}>
         <TouchableOpacity
           style={[
@@ -54,7 +69,7 @@ export default function SettingsScreen({ navigation }: any) {
           ]}
           onPress={() => setTheme('light')}
         >
-          <Text style={{ color: text }}>Claro</Text>
+          <Text style={{ color: text }}>{t('settings.theme_light')}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[
@@ -64,7 +79,7 @@ export default function SettingsScreen({ navigation }: any) {
           ]}
           onPress={() => setTheme('dark')}
         >
-          <Text style={{ color: text }}>Oscuro</Text>
+          <Text style={{ color: text }}>{t('settings.theme_dark')}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[
@@ -74,12 +89,46 @@ export default function SettingsScreen({ navigation }: any) {
           ]}
           onPress={() => setTheme('system')}
         >
-          <Text style={{ color: text }}>Sistema</Text>
+          <Text style={{ color: text }}>{t('settings.theme_system')}</Text>
+        </TouchableOpacity>
+      </View>
+
+      <Text style={[styles.label, { color: labelColor }]}>{t('settings.language')}</Text>
+      <View style={styles.themeRow}>
+        <TouchableOpacity
+          style={[
+            styles.themeButton,
+            { backgroundColor: themeButtonBg, borderColor: themeButtonBorder },
+            language === 'es' && { backgroundColor: themeButtonActiveBg, borderColor: themeButtonActiveBorder },
+          ]}
+          onPress={() => setLanguage('es')}
+        >
+          <Text style={{ color: text }}>{t('settings.language_es')}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[
+            styles.themeButton,
+            { backgroundColor: themeButtonBg, borderColor: themeButtonBorder },
+            language === 'en' && { backgroundColor: themeButtonActiveBg, borderColor: themeButtonActiveBorder },
+          ]}
+          onPress={() => setLanguage('en')}
+        >
+          <Text style={{ color: text }}>{t('settings.language_en')}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[
+            styles.themeButton,
+            { backgroundColor: themeButtonBg, borderColor: themeButtonBorder },
+            language === 'system' && { backgroundColor: themeButtonActiveBg, borderColor: themeButtonActiveBorder },
+          ]}
+          onPress={() => setLanguage('system')}
+        >
+          <Text style={{ color: text }}>{t('settings.language_system')}</Text>
         </TouchableOpacity>
       </View>
 
       <TouchableOpacity style={[styles.logoutButton, { backgroundColor: logoutBg }]} onPress={handleLogout}>
-        <Text style={[styles.logoutText, { color: logoutText }]}>Cerrar Sesión</Text>
+        <Text style={[styles.logoutText, { color: logoutText }]}>{t('settings.logout')}</Text>
       </TouchableOpacity>
     </View>
   );
