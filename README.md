@@ -83,7 +83,7 @@ cumplenoti/
 | --------------------------------- | ------ |
 | Pantallas base (Login, Registro…) | ✅      |
 | Navegación y formularios          | ✅      |
-| Soporte multilenguaje             | 🔜      |
+| Soporte multilenguaje             | ✅      |
 | Backend y autenticación           | 🔜     |
 | Temas           | ✅     |
 | Notificaciones push               | 🔜     |
